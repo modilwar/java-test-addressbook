@@ -1,7 +1,7 @@
 package com.gumtree.service;
 
 import com.gumtree.domain.Contact;
-import com.gumtree.domain.ContactDescendingAgeConparator;
+import com.gumtree.domain.ContactDescendingAgeComparator;
 import com.gumtree.repository.AddressBookRepository;
 
 import java.util.Collections;
@@ -9,11 +9,11 @@ import java.util.List;
 
 public class AddressBookServiceImpl implements AddressBookService {
     private final AddressBookRepository repository;
-    private ContactDescendingAgeConparator conparator;
+    private ContactDescendingAgeComparator conparator;
 
     public AddressBookServiceImpl(AddressBookRepository repository) {
         this.repository = repository;
-        this.conparator = new ContactDescendingAgeConparator();
+        this.conparator = new ContactDescendingAgeComparator();
     }
 
     @Override

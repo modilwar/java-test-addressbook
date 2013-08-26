@@ -5,12 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
 
-public class ContactDescendingAgeConparatorTest {
+public class ContactDescendingAgeComparatorTest {
 
     public static final String ANY_NAME = "Name";
     public static final String ANY_GENDER = "Male";
@@ -21,7 +18,7 @@ public class ContactDescendingAgeConparatorTest {
 
     @Before
     public void setup() throws Exception {
-        conparator = new ContactDescendingAgeConparator();
+        conparator = new ContactDescendingAgeComparator();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 
