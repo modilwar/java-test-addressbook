@@ -47,7 +47,6 @@ public class AddressBookApplication {
         Contact paul = application.contactByName("Paul Robinson");
         long days = application.getAgeDifferenceInDays(bill, paul);
         System.out.print("Bill is " + days + " days older than Paul");
-
     }
 
     public void init() {
@@ -59,7 +58,6 @@ public class AddressBookApplication {
                 addressBookRepository.add(contact);
             }
         } catch (IOException e) {
-//            e.printStackTrace();
             System.out.print("ERROR: could not open AddressBook file");
         }
     }
