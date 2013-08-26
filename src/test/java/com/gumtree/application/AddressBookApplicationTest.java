@@ -1,6 +1,8 @@
 package com.gumtree.application;
 
+import com.gumtree.domain.Contact;
 import com.gumtree.io.FileReader;
+import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.util.ContactParser;import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +18,14 @@ import static org.mockito.Mockito.when;
 public class AddressBookApplicationTest {
 
     static String FILE = "../AddressBook";
-    public static final String ADDRESS_BOOK_LINE = "addressBookLine";
+    public static final String ADDRESS_BOOK_LINE = "Mohammed Hussain, Male, 15/06/1982";
 
     private AddressBookApplication application;
     private FileReader fileReader;
     private ContactParser contactParser;
+    private AddressBookRepository addressBookRepository;
+
+    private Contact contact;
 
     @Before
     public void setup() {
@@ -29,9 +34,13 @@ public class AddressBookApplicationTest {
         fileReader = mock(FileReader.class);
         when(fileReader.readLines(FILE)).thenReturn(lines);
 
+        contact = new Contact("Male");
         contactParser = mock(ContactParser.class);
+        when(contactParser.parse(ADDRESS_BOOK_LINE)).thenReturn(contact);
 
-        application = new AddressBookApplication(fileReader, contactParser);
+        addressBookRepository = mock(AddressBookRepository.class);
+
+        application = new AddressBookApplication(fileReader, contactParser, addressBookRepository);
     }
 
     @Test
@@ -44,6 +53,12 @@ public class AddressBookApplicationTest {
     public void initParsesEachLineForAddressBookFile() {
         application.init();
         verify(contactParser).parse(ADDRESS_BOOK_LINE);
+    }
+
+    @Test
+    public void initAddsAllContactsFromTheAddressBookFileIntoRepository() {
+        application.init();
+        verify(addressBookRepository).add(contact);
     }
 
 }
