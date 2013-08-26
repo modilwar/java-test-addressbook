@@ -10,6 +10,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 
 public class AddressBookLinkedListRepositoryTest {
 
@@ -59,5 +60,25 @@ public class AddressBookLinkedListRepositoryTest {
 
         assertNotNull(allContacts);
         assertEquals(2, allContacts.size());
+    }
+
+    @Test
+    public void get_returnNull_whenAddressBookContainsNoContacts() {
+        assertNull(repository.get(JANE));
+    }
+
+    @Test
+    public void get_returnNull_whenAddressContactWithGivenNameNotFoundInAddress() {
+        repository.add(johnMale150682);
+        repository.add(janeFemale081285);
+        assertNull(repository.get("BOB"));
+    }
+
+    @Test
+    public void get_returnContact_whenAddressContactWithGivenNameIsFoundInAddress() {
+        repository.add(janeFemale081285);
+        repository.add(johnMale150682);
+        Contact jane = repository.get(JANE);
+        assertNotNull(jane);
     }
 }

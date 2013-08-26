@@ -25,6 +25,9 @@ public class AddressBookLinkedListRepository implements AddressBookRepository {
 
     @Override
     public Contact get(String name) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        for (Contact contact : contacts) {
+            if (name.endsWith(contact.getName())) return contact;
+        }
+        return null;
     }
 }
