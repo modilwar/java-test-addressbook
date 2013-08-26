@@ -7,6 +7,7 @@ import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.service.AddressBookService;
 import com.gumtree.util.ContactParser;
 
+import java.io.IOException;
 import java.util.List;
 
 public class AddressBookApplication {
@@ -29,12 +30,17 @@ public class AddressBookApplication {
     }
 
     public void init() {
-        List<String> lines = fileReader.readLines(FILE);
-        for (String line : lines) {
-            Contact contact = contactParser.parse(line);
-            addressBookRepository.add(contact);
+        List<String> lines = null;
+        try {
+            lines = fileReader.readLines(FILE);
+            for (String line : lines) {
+                Contact contact = contactParser.parse(line);
+                addressBookRepository.add(contact);
+            }
+        } catch (IOException e) {
+//            e.printStackTrace();
+            System.out.print("ERROR: could not open AddressBook file");
         }
-
     }
 
     public int numberOfMaleContacts() {

@@ -9,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +34,7 @@ public class AddressBookApplicationTest {
     private Contact contact;
 
     @Before
-    public void setup() {
+    public void setup() throws Exception {
         LinkedList<String> lines = new LinkedList<>();
         lines.add(ADDRESS_BOOK_LINE);
         fileReader = mock(FileReader.class);
@@ -49,7 +52,19 @@ public class AddressBookApplicationTest {
     }
 
     @Test
-    public void initReadsAddressBookFile() {
+    public void initExitsApplicationIfAddressBookFileCanNotBeRead() throws Exception {
+        when(fileReader.readLines(FILE)).thenThrow(IOException.class);
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
+
+        application.init() ;
+
+        assertEquals("ERROR: could not open AddressBook file", output.toString());
+    }
+
+    @Test
+    public void initReadsAddressBookFile() throws Exception{
         application.init() ;
         verify(fileReader).readLines(FILE);
     }
