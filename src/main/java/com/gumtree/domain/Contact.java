@@ -1,20 +1,31 @@
 package com.gumtree.domain;
 
+import java.util.Date;
+
 public class Contact {
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
 
     private final String gender;
+    private final Date dob;
     private final String name;
 
     public Contact(String gender) {
         this.gender = gender;
         this.name = "";
+        this.dob = new Date();
     }
 
     public Contact(String name, String gender) {
         this.name = name;
         this.gender = gender;
+        this.dob = new Date();
+    }
+
+    public Contact(String name, String gender, Date dob) {
+        this.name = name;
+        this.gender = gender;
+        this.dob = dob;
     }
 
     public boolean isMale() {
@@ -32,16 +43,22 @@ public class Contact {
 
         Contact contact = (Contact) o;
 
-        if (!gender.equals(contact.gender)) return false;
-        if (!name.equals(contact.name)) return false;
+        if (dob != null ? !dob.equals(contact.dob) : contact.dob != null) return false;
+        if (gender != null ? !gender.equals(contact.gender) : contact.gender != null) return false;
+        if (name != null ? !name.equals(contact.name) : contact.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = gender.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = gender != null ? gender.hashCode() : 0;
+        result = 31 * result + (dob != null ? dob.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    public Date getDob() {
+        return dob;
     }
 }
