@@ -3,14 +3,14 @@ package com.gumtree.domain;
 import java.util.Date;
 
 public class Contact {
-    public static final String MALE = "Male";
-    public static final String FEMALE = "Female";
+    public static final Gender MALE = Gender.MALE;
+    public static final Gender FEMALE = Gender.FEMALE;
 
-    private final String gender;
+    private final Gender gender;
     private final Date dob;
     private final String name;
 
-    public Contact(String name, String gender, Date dob) {
+    public Contact(String name, Gender gender, Date dob) {
         this.name = name;
         this.gender = gender;
         this.dob = dob;

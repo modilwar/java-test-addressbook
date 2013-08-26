@@ -11,8 +11,8 @@ public class ContactTest {
     private static final String JOHN = "John";
     private static final String JANE = "Jane";
 
-    public static final String MALE = "Male";
-    public static final String FEMALE = "Female";
+    public static final Gender MALE = Gender.MALE;
+    public static final Gender FEMALE = Gender.FEMALE;
 
     private Contact johnMale150682;
     private Contact janeFemale081285;

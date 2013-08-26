@@ -10,7 +10,7 @@ import java.util.Comparator;
 public class ContactDescendingAgeComparatorTest {
 
     public static final String ANY_NAME = "Name";
-    public static final String ANY_GENDER = "Male";
+    public static final Gender ANY_GENDER = Gender.MALE;
     private Comparator<Contact> conparator;
 
     private Contact olderContact;

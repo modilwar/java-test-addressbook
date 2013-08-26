@@ -1,6 +1,7 @@
 package com.gumtree.util;
 
 import com.gumtree.domain.Contact;
+import com.gumtree.domain.Gender;
 import com.gumtree.exception.BadlyFormattedContactException;
 
 import java.text.ParseException;
@@ -20,7 +21,7 @@ public class ContactParser {
         throwBadlyFormattedContactExceptionIfInputHaveCorrectNumberOfCSVs(contactCSV);
 
         String name = getName(contactCSV);
-        String gender = getGender(contactCSV);
+        Gender gender = getGender(contactCSV);
         Date dob = getDOB(contactCSV);
 
         return new Contact(name, gender, dob);
@@ -42,13 +43,18 @@ public class ContactParser {
         return contactCSV[0].trim();
     }
 
-    private String getGender(String[] contactCSV) {
-        String gender = contactCSV[1].trim();
+    private Gender getGender(String[] contactCSV) {
+        String gender = contactCSV[1].trim().toUpperCase();
 
-        if (!gender.equals("Male") && !gender.equals("Female")) {
+        if (Gender.MALE.name().equals(gender)){
+            return Gender.MALE;
+        }
+        else if (Gender.FEMALE.name().equals(gender)) {
+            return Gender.FEMALE;
+        }
+        else {
             throw new BadlyFormattedContactException();
         }
-        return gender;
     }
 
     private Date getDOB(String[] contactCSV) {

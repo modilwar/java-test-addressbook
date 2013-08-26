@@ -1,6 +1,7 @@
 package com.gumtree.application;
 
 import com.gumtree.domain.Contact;
+import com.gumtree.domain.Gender;
 import com.gumtree.io.FileReader;
 import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.service.AddressBookService;
@@ -27,7 +28,7 @@ public class AddressBookApplicationTest {
     static String FILE = "AddressBook";
     private static final String ADDRESS_BOOK_LINE = "Mohammed Hussain, Male, 15/06/1982";
     private static final String NAME = "name";
-    private static final String GENDER = "Male";
+    private static final Gender GENDER = Gender.MALE;
 
     private AddressBookApplication application;
     private FileReader fileReader;

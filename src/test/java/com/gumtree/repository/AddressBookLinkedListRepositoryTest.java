@@ -1,6 +1,7 @@
 package com.gumtree.repository;
 
 import com.gumtree.domain.Contact;
+import com.gumtree.domain.Gender;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,8 +18,8 @@ public class AddressBookLinkedListRepositoryTest {
     private static final String JOHN = "John";
     private static final String JANE = "Jane";
 
-    private static final String MALE = "Male";
-    private static final String FEMALE = "Female";
+    private static final Gender MALE = Gender.MALE;
+    private static final Gender FEMALE = Gender.FEMALE;
 
     private Contact johnMale150682;
     private Contact janeFemale081285;
