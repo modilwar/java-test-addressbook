@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 public class AddressBookApplicationTest {
 
-    static String FILE = "../AddressBook";
+    static String FILE = "AddressBook";
     public static final String ADDRESS_BOOK_LINE = "Mohammed Hussain, Male, 15/06/1982";
 
     private AddressBookApplication application;
