@@ -40,7 +40,7 @@ public class AddressBookApplicationTest {
         fileReader = mock(FileReader.class);
         when(fileReader.readLines(FILE)).thenReturn(lines);
 
-        contact = new Contact("Male");
+        contact = new Contact("Name", "Male");
         contactParser = mock(ContactParser.class);
         when(contactParser.parse(ADDRESS_BOOK_LINE)).thenReturn(contact);
 
@@ -90,6 +90,18 @@ public class AddressBookApplicationTest {
 
         verify(addressBookService).getNumberOfMaleContacts();
         assertEquals(3, numberOfMaleContacts);
+    }
+
+    @Test
+    public void oldestPerson() {
+        when(addressBookService.getOldestPerson()).thenReturn(contact);
+        application.init();
+
+        Contact actualOldestContact = application.oldestPerson();
+
+        verify(addressBookService).getOldestPerson();
+        assertEquals(contact, actualOldestContact);
+        assertEquals(contact, actualOldestContact);
     }
 
 

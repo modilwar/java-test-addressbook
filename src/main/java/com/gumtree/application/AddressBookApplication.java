@@ -58,4 +58,8 @@ public class AddressBookApplication {
     public int numberOfMaleContacts() {
         return addressBookService.getNumberOfMaleContacts();
     }
+
+    public Contact oldestPerson() {
+        return addressBookService.getOldestPerson();
+    }
 }

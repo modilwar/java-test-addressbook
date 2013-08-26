@@ -21,4 +21,9 @@ public class AddressBookServiceImpl implements AddressBookService {
         }
         return noOfMales;
     }
+
+    @Override
+    public Contact getOldestPerson() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
