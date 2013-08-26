@@ -3,13 +3,15 @@ package com.gumtree.application;
 import com.gumtree.domain.Contact;
 import com.gumtree.io.FileReader;
 import com.gumtree.repository.AddressBookRepository;
-import com.gumtree.util.ContactParser;import org.junit.Assert;
+import com.gumtree.service.AddressBookService;
+import com.gumtree.util.ContactParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.LinkedList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -24,6 +26,7 @@ public class AddressBookApplicationTest {
     private FileReader fileReader;
     private ContactParser contactParser;
     private AddressBookRepository addressBookRepository;
+    private AddressBookService addressBookService;
 
     private Contact contact;
 
@@ -40,7 +43,9 @@ public class AddressBookApplicationTest {
 
         addressBookRepository = mock(AddressBookRepository.class);
 
-        application = new AddressBookApplication(fileReader, contactParser, addressBookRepository);
+        addressBookService = mock(AddressBookService.class);
+
+        application = new AddressBookApplication(fileReader, contactParser, addressBookRepository, addressBookService);
     }
 
     @Test
@@ -60,5 +65,18 @@ public class AddressBookApplicationTest {
         application.init();
         verify(addressBookRepository).add(contact);
     }
+
+    @Test
+    public void numberOfMaleContacts() {
+        when(addressBookService.getNumberOfMaleContacts()).thenReturn(3);
+
+        application.init();
+        int numberOfMaleContacts = application.numberOfMaleContacts();
+
+        verify(addressBookService).getNumberOfMaleContacts();
+        assertEquals(3, numberOfMaleContacts);
+    }
+
+
 
 }
