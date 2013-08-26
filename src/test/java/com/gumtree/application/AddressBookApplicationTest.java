@@ -24,7 +24,8 @@ import static org.mockito.Mockito.when;
 public class AddressBookApplicationTest {
 
     static String FILE = "AddressBook";
-    public static final String ADDRESS_BOOK_LINE = "Mohammed Hussain, Male, 15/06/1982";
+    private static final String ADDRESS_BOOK_LINE = "Mohammed Hussain, Male, 15/06/1982";
+    private static final String NAME = "name";
 
     private AddressBookApplication application;
     private FileReader fileReader;
@@ -102,7 +103,17 @@ public class AddressBookApplicationTest {
 
         verify(addressBookService).getOldestPerson();
         assertEquals(contact, actualOldestContact);
-        assertEquals(contact, actualOldestContact);
+    }
+
+    @Test
+    public void contactByName() {
+        when(addressBookService.findContactByName(NAME)).thenReturn(contact);
+        application.init();
+
+        Contact contactFoundByName = application.contactByName(NAME);
+
+        verify(addressBookService).findContactByName(NAME);
+        assertEquals(contact, contactFoundByName);
     }
 
 

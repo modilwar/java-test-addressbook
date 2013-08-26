@@ -6,4 +6,6 @@ public interface AddressBookService {
     int getNumberOfMaleContacts();
 
     Contact getOldestPerson();
+
+    Contact findContactByName(String name);
 }

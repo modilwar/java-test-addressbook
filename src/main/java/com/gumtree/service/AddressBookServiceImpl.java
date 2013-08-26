@@ -36,4 +36,9 @@ public class AddressBookServiceImpl implements AddressBookService {
         }
         return null;
     }
+
+    @Override
+    public Contact findContactByName(String name) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

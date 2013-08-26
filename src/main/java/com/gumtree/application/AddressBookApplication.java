@@ -65,4 +65,8 @@ public class AddressBookApplication {
     public Contact oldestPerson() {
         return addressBookService.getOldestPerson();
     }
+
+    public Contact contactByName(String name) {
+        return addressBookService.findContactByName(name);
+    }
 }
