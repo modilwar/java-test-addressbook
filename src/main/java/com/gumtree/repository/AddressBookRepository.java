@@ -8,4 +8,6 @@ public interface AddressBookRepository {
     void add(Contact contact);
 
     List<Contact> getAllContacts();
+
+    Contact get(String name);
 }

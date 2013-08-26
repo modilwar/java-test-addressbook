@@ -114,4 +114,18 @@ public class AddressBookServiceImplTest {
         verify(repository).getAllContacts();
     }
 
+    @Test
+    public void findContactByName_returnsNullWhenContactWithGivenNameNotFoundInRepository() {
+        when(repository.get(JOHN)).thenReturn(null) ;
+        assertNull(service.findContactByName(JOHN));
+        verify(repository).get(JOHN);
+    }
+
+    @Test
+    public void findContactByName_returnsContactWhenContactWithGivenNameIsFoundInRepository() {
+        when(repository.get(JANE)).thenReturn(janeFemale081285) ;
+        Contact contact = service.findContactByName(JANE);
+        assertEquals(janeFemale081285, contact);
+        verify(repository).get(JANE);
+    }
 }

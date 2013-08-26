@@ -22,4 +22,9 @@ public class AddressBookLinkedListRepository implements AddressBookRepository {
     public void add(Contact contact) {
         contacts.add(contact);
     }
+
+    @Override
+    public Contact get(String name) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
