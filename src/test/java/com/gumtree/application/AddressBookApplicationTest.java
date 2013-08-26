@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Date;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +41,7 @@ public class AddressBookApplicationTest {
         fileReader = mock(FileReader.class);
         when(fileReader.readLines(FILE)).thenReturn(lines);
 
-        contact = new Contact("Name", "Male");
+        contact = new Contact("Name", "Male", new Date());
         contactParser = mock(ContactParser.class);
         when(contactParser.parse(ADDRESS_BOOK_LINE)).thenReturn(contact);
 

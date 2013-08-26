@@ -10,18 +10,6 @@ public class Contact {
     private final Date dob;
     private final String name;
 
-    public Contact(String gender) {
-        this.gender = gender;
-        this.name = "";
-        this.dob = new Date();
-    }
-
-    public Contact(String name, String gender) {
-        this.name = name;
-        this.gender = gender;
-        this.dob = new Date();
-    }
-
     public Contact(String name, String gender, Date dob) {
         this.name = name;
         this.gender = gender;
@@ -60,5 +48,9 @@ public class Contact {
 
     public Date getDob() {
         return dob;
+    }
+
+    public String getName() {
+        return name;
     }
 }

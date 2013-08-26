@@ -3,6 +3,10 @@ package com.gumtree.util;
 import com.gumtree.domain.Contact;
 import com.gumtree.exception.BadlyFormattedContactException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ContactParser {
 
     private static final int VALID_NUMBER_OF_CSV = 3;
@@ -15,9 +19,11 @@ public class ContactParser {
 
         throwBadlyFormattedContactExceptionIfInputHaveCorrectNumberOfCSVs(contactCSV);
 
+        String name = getName(contactCSV);
         String gender = getGender(contactCSV);
+        Date dob = getDOB(contactCSV);
 
-        return new Contact(gender);
+        return new Contact(name, gender, dob);
     }
 
     private void throwBadlyFormattedContactExceptionWhenInputIsNull(String contact) {
@@ -32,6 +38,10 @@ public class ContactParser {
         }
     }
 
+    private String getName(String[] contactCSV) {
+        return contactCSV[0].trim();
+    }
+
     private String getGender(String[] contactCSV) {
         String gender = contactCSV[1].trim();
 
@@ -39,5 +49,16 @@ public class ContactParser {
             throw new BadlyFormattedContactException();
         }
         return gender;
+    }
+
+    private Date getDOB(String[] contactCSV) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        String dob = contactCSV[2].trim();
+
+        try {
+            return sdf.parse(dob);
+        } catch (ParseException e) {
+            throw new BadlyFormattedContactException();
+        }
     }
 }

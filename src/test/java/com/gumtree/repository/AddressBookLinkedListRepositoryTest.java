@@ -4,6 +4,8 @@ import com.gumtree.domain.Contact;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -11,14 +13,25 @@ import static junit.framework.Assert.assertNotNull;
 
 public class AddressBookLinkedListRepositoryTest {
 
-    private static final Contact CONTACT_1 = new Contact("Male");
-    private static final Contact CONTACT_2 = new Contact("Female");
+    private static final String JOHN = "John";
+    private static final String JANE = "Jane";
+
+    private static final String MALE = "Male";
+    private static final String FEMALE = "Female";
+
+    private Contact johnMale150682;
+    private Contact janeFemale081285;
 
     private AddressBookRepository repository;
 
     @Before
-    public void setup() {
+    public void setup() throws Exception {
         repository = new AddressBookLinkedListRepository();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+
+        johnMale150682 = new Contact(JOHN, MALE, sdf.parse("15/06/82"));
+        janeFemale081285 = new Contact(JANE, FEMALE, sdf.parse("08/12/85"));
     }
 
     @Test
@@ -31,7 +44,7 @@ public class AddressBookLinkedListRepositoryTest {
 
     @Test
     public void getAllContactsTest_returnOneContact_whenAddressBookContainsOneContact() {
-        repository.add(CONTACT_1);
+        repository.add(johnMale150682);
         List<Contact> allContacts = repository.getAllContacts();
 
         assertNotNull(allContacts);
@@ -40,8 +53,8 @@ public class AddressBookLinkedListRepositoryTest {
 
     @Test
     public void getAllContactsTest_returnAllContacts_whenAddressBookContainsManyContacts() {
-        repository.add(CONTACT_1);
-        repository.add(CONTACT_1);
+        repository.add(johnMale150682);
+        repository.add(johnMale150682);
         List<Contact> allContacts = repository.getAllContacts();
 
         assertNotNull(allContacts);
