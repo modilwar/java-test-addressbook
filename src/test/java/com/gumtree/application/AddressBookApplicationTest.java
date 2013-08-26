@@ -5,6 +5,7 @@ import com.gumtree.io.FileReader;
 import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.service.AddressBookService;
 import com.gumtree.util.ContactParser;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -26,6 +27,7 @@ public class AddressBookApplicationTest {
     static String FILE = "AddressBook";
     private static final String ADDRESS_BOOK_LINE = "Mohammed Hussain, Male, 15/06/1982";
     private static final String NAME = "name";
+    private static final String GENDER = "Male";
 
     private AddressBookApplication application;
     private FileReader fileReader;
@@ -33,18 +35,24 @@ public class AddressBookApplicationTest {
     private AddressBookRepository addressBookRepository;
     private AddressBookService addressBookService;
 
-    private Contact contact;
+    private Contact contact1;
+    private Contact contact2;
 
     @Before
     public void setup() throws Exception {
+        Date today = new DateTime(new Date()).toDate();
+        Date tomorrow = new DateTime(new Date()).plusDays(1).toDate();
+
+        contact1 = new Contact(NAME, GENDER, today);
+        contact2 = new Contact(NAME, GENDER, tomorrow);
+
         LinkedList<String> lines = new LinkedList<>();
         lines.add(ADDRESS_BOOK_LINE);
         fileReader = mock(FileReader.class);
         when(fileReader.readLines(FILE)).thenReturn(lines);
 
-        contact = new Contact("Name", "Male", new Date());
         contactParser = mock(ContactParser.class);
-        when(contactParser.parse(ADDRESS_BOOK_LINE)).thenReturn(contact);
+        when(contactParser.parse(ADDRESS_BOOK_LINE)).thenReturn(contact1);
 
         addressBookRepository = mock(AddressBookRepository.class);
 
@@ -80,7 +88,7 @@ public class AddressBookApplicationTest {
     @Test
     public void initAddsAllContactsFromTheAddressBookFileIntoRepository() {
         application.init();
-        verify(addressBookRepository).add(contact);
+        verify(addressBookRepository).add(contact1);
     }
 
     @Test
@@ -96,24 +104,60 @@ public class AddressBookApplicationTest {
 
     @Test
     public void oldestPerson() {
-        when(addressBookService.getOldestPerson()).thenReturn(contact);
+        when(addressBookService.getOldestPerson()).thenReturn(contact1);
         application.init();
 
         Contact actualOldestContact = application.oldestPerson();
 
         verify(addressBookService).getOldestPerson();
-        assertEquals(contact, actualOldestContact);
+        assertEquals(contact1, actualOldestContact);
     }
 
     @Test
     public void contactByName() {
-        when(addressBookService.findContactByName(NAME)).thenReturn(contact);
+        when(addressBookService.findContactByName(NAME)).thenReturn(contact1);
         application.init();
 
         Contact contactFoundByName = application.contactByName(NAME);
 
         verify(addressBookService).findContactByName(NAME);
-        assertEquals(contact, contactFoundByName);
+        assertEquals(contact1, contactFoundByName);
+    }
+
+    @Test
+    public void ageDifferenceInDays_whenSameDOB() {
+        application.init();
+
+        when(addressBookService.ageDifferenceBetween(contact1, contact1)).thenReturn(0L);
+
+        long days = application.getAgeDifferenceInDays(contact1, contact1);
+
+        verify(addressBookService).ageDifferenceBetween(contact1, contact1);
+        assertEquals(0L, days);
+    }
+
+    @Test
+    public void ageDifferenceInDays_whenFirstContactIsOlder() {
+        application.init();
+
+        when(addressBookService.ageDifferenceBetween(contact1, contact2)).thenReturn(1L);
+
+        long days = application.getAgeDifferenceInDays(contact1, contact2);
+
+        verify(addressBookService).ageDifferenceBetween(contact1, contact2);
+        assertEquals(1L, days);
+    }
+
+    @Test
+    public void ageDifferenceInDays_whenFirstContactIsYounger() {
+        application.init();
+
+        when(addressBookService.ageDifferenceBetween(contact2, contact1)).thenReturn(-1L);
+
+        long days = application.getAgeDifferenceInDays(contact2, contact1);
+
+        verify(addressBookService).ageDifferenceBetween(contact2, contact1);
+        assertEquals(-1L, days);
     }
 
 

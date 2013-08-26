@@ -1,7 +1,6 @@
 package com.gumtree.application;
 
-import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -21,7 +20,8 @@ public class AddressBookApplicationIntegrationTest {
         AddressBookApplication.main(args);
 
         String expectedOutput = "There are 3 males in the address book\n" +
-                                "The oldest person in the address book is Wes Jackson";
+                                "The oldest person in the address book is Wes Jackson\n" +
+                                "Bill is 2862 days older than Paul";
         assertEquals(expectedOutput, output.toString());
     }
 

@@ -5,7 +5,11 @@ import com.gumtree.domain.ContactDescendingAgeComparator;
 import com.gumtree.repository.AddressBookRepository;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 public class AddressBookServiceImpl implements AddressBookService {
     private final AddressBookRepository repository;
@@ -40,5 +44,16 @@ public class AddressBookServiceImpl implements AddressBookService {
     @Override
     public Contact findContactByName(String name) {
         return repository.get(name);
+    }
+
+    @Override
+    public long ageDifferenceBetween(Contact contact1, Contact contact2) {
+        Date dob1 = contact1.getDob();
+        Date dob2 = contact2.getDob();
+        long days = Days.daysBetween(new DateTime(dob1), new DateTime(dob2)).getDays();
+        if (dob1.after(dob2)) {
+            return days * 1;
+        }
+        return days;
     }
 }

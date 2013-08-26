@@ -41,7 +41,13 @@ public class AddressBookApplication {
         System.out.println("There are " + numberOfMaleCustomers + " males in the address book");
 
         Contact oldestPerson = application.oldestPerson();
-        System.out.print("The oldest person in the address book is " + oldestPerson.getName());
+        System.out.println("The oldest person in the address book is " + oldestPerson.getName());
+
+        Contact bill = application.contactByName("Bill McKnight");
+        Contact paul = application.contactByName("Paul Robinson");
+        long days = application.getAgeDifferenceInDays(bill, paul);
+        System.out.print("Bill is " + days + " days older than Paul");
+
     }
 
     public void init() {
@@ -68,5 +74,9 @@ public class AddressBookApplication {
 
     public Contact contactByName(String name) {
         return addressBookService.findContactByName(name);
+    }
+
+    public long getAgeDifferenceInDays(Contact contact1, Contact contact2) {
+        return addressBookService.ageDifferenceBetween(contact1, contact2);
     }
 }

@@ -8,4 +8,6 @@ public interface AddressBookService {
     Contact getOldestPerson();
 
     Contact findContactByName(String name);
+
+    long ageDifferenceBetween(Contact contact1, Contact contact2);
 }
