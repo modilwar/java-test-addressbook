@@ -21,7 +21,7 @@ public class ContactDescendingAgeConparatorTest {
 
     @Before
     public void setup() throws Exception {
-        conparator = new ContactDescendingAgeConparator<Contact>();
+        conparator = new ContactDescendingAgeConparator();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 
@@ -32,13 +32,13 @@ public class ContactDescendingAgeConparatorTest {
     @Test
     public void dob1IsOlderThanDob2() {
         int comparison = conparator.compare(olderContact, youngerContact);
-        Assert.assertEquals(1, comparison);
+        Assert.assertEquals(-1, comparison);
     }
 
     @Test
     public void dob2IsOlderThanDob1() {
         int comparison = conparator.compare(youngerContact, olderContact);
-        Assert.assertEquals(-1, comparison);
+        Assert.assertEquals(1, comparison);
     }
 
     @Test
