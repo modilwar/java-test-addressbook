@@ -20,7 +20,8 @@ public class AddressBookApplicationIntegrationTest {
         String[] args = new String[]{};
         AddressBookApplication.main(args);
 
-        String expectedOutput = "There are 3 males in the address book";
+        String expectedOutput = "There are 3 males in the address book\n" +
+                                "The oldest person in the address book is Wes Jackson";
         assertEquals(expectedOutput, output.toString());
     }
 

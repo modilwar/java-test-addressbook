@@ -38,7 +38,10 @@ public class AddressBookApplication {
         application.init();
 
         int numberOfMaleCustomers = application.numberOfMaleContacts();
-        System.out.print("There are " + numberOfMaleCustomers + " males in the address book");
+        System.out.println("There are " + numberOfMaleCustomers + " males in the address book");
+
+        Contact oldestPerson = application.oldestPerson();
+        System.out.print("The oldest person in the address book is " + oldestPerson.getName());
     }
 
     public void init() {
