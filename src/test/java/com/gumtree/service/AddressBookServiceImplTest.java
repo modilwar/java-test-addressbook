@@ -225,4 +225,16 @@ public class AddressBookServiceImplTest {
         verify(repository).getAllContacts();
     }
 
+    @Test
+    public void getContactsOrderedByAge_whenLimitIsGreaterThanNumberOfContacts_getsReturnsAllContatcs() {
+        List<Contact> contacts = new LinkedList<Contact>(){
+            {add(jackMale160682);add(janeFemale081285);add(johnMale150682);add(joeFemale081285);}};
+
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        ContactsDTO result = service.getContactsOrderedByAge(Order.ASC, 5);
+        assertEquals(4, result.getContacts().size());
+        verify(repository).getAllContacts();
+    }
+
 }

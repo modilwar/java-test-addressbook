@@ -86,6 +86,7 @@ public class AddressBookServiceImpl implements AddressBookService {
                 Collections.sort(allContacts, desc);
             }
 
+            if (limit > allContacts.size()) limit = allContacts.size();
             for (int i = 0; i < limit; i++) {
                 Contact contact = allContacts.get(i);
                 ContactDTO contactDTO = new ContactUtils().createContactDTO(contact);
