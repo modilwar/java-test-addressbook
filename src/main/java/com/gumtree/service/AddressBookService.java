@@ -18,5 +18,5 @@ public interface AddressBookService {
 
     List<Contact> getContactsByGender(Gender gen);
 
-    ContactsDTO getContactsOrderedByDob(Order order, int limit);
+    ContactsDTO getContactsOrderedByAge(Order order, int limit);
 }

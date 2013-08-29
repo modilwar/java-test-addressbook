@@ -2,6 +2,8 @@ package com.gumtree.service;
 
 import com.gumtree.domain.Contact;
 import com.gumtree.domain.Gender;
+import com.gumtree.domain.Order;
+import com.gumtree.dto.ContactsDTO;
 import com.gumtree.repository.AddressBookRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -196,6 +198,31 @@ public class AddressBookServiceImplTest {
         assertEquals(2, service.getContactsByGender(Gender.MALE).size());
         assertEquals(2, service.getContactsByGender(Gender.FEMALE).size());
         verify(repository, times(2)).getAllContacts();
+    }
+
+    @Test
+    public void getContactsOrderedByAge_getsContactsOrderByAgeDescending() {
+        List<Contact> contacts = new LinkedList<Contact>(){
+            {add(janeFemale081285);add(jackMale160682);add(johnMale150682);add(joeFemale081285);}};
+
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        ContactsDTO result = service.getContactsOrderedByAge(Order.DESC, 1);
+        assertEquals(1, result.getContacts().size());
+        assertEquals(JOHN, result.getContacts().get(0).getName());
+    }
+
+    @Test
+    public void getContactsOrderedByAge_getsContactsOrderByAgeAscending() {
+        List<Contact> contacts = new LinkedList<Contact>(){
+            {add(jackMale160682);add(janeFemale081285);add(johnMale150682);add(joeFemale081285);}};
+
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        ContactsDTO result = service.getContactsOrderedByAge(Order.ASC, 1);
+        assertEquals(1, result.getContacts().size());
+        assertEquals(JANE, result.getContacts().get(0).getName());
+        verify(repository).getAllContacts();
     }
 
 }

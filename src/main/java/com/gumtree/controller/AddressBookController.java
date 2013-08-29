@@ -43,7 +43,7 @@ public class AddressBookController {
 
         throwIllegalArgumentExceptionForLimitLessThanOne(limit);
 
-        return addressBookService.getContactsOrderedByDob(order, limit);
+        return addressBookService.getContactsOrderedByAge(order, limit);
     }
 
     private void throwIllegalArgumentExceptionForIlllegalOrderByParameters(String orderBy) {

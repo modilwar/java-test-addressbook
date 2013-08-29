@@ -190,7 +190,7 @@ public class AddressBookControllerTest {
         List<ContactDTO> contactDTOs = new ContactUtils().createContactDTOs(allContacts);
         ContactsDTO orderedContactsDTO = new ContactsDTO(contactDTOs);
 
-        when(addressBookServiceMock.getContactsOrderedByDob(Order.ASC, 10)).thenReturn(orderedContactsDTO);
+        when(addressBookServiceMock.getContactsOrderedByAge(Order.ASC, 10)).thenReturn(orderedContactsDTO);
 
         mockMvc.perform(get("/api/contact"))
                 .andExpect(status().isOk())
@@ -211,7 +211,7 @@ public class AddressBookControllerTest {
                 .andExpect(jsonPath("$.contacts[3].dob", is(contactDTOs.get(3).getDob())))
         ;
 
-        verify(addressBookServiceMock).getContactsOrderedByDob(Order.ASC, 10);
+        verify(addressBookServiceMock).getContactsOrderedByAge(Order.ASC, 10);
         verifyNoMoreInteractions(addressBookServiceMock);
     }
 
@@ -221,7 +221,7 @@ public class AddressBookControllerTest {
         List<ContactDTO> contactDTOs = new ContactUtils().createContactDTOs(allContacts);
         ContactsDTO orderedContactsDTO = new ContactsDTO(contactDTOs);
 
-        when(addressBookServiceMock.getContactsOrderedByDob(Order.DESC, 4)).thenReturn(orderedContactsDTO);
+        when(addressBookServiceMock.getContactsOrderedByAge(Order.DESC, 4)).thenReturn(orderedContactsDTO);
 
         mockMvc.perform(get("/api/contact?order_by={order_by}&order_how={order_how}&limit={limit}", "age", "desc", "4"))
                 .andExpect(status().isOk())
@@ -242,7 +242,7 @@ public class AddressBookControllerTest {
                 .andExpect(jsonPath("$.contacts[3].dob", is(contactDTOs.get(3).getDob())))
         ;
 
-        verify(addressBookServiceMock).getContactsOrderedByDob(Order.DESC, 4);
+        verify(addressBookServiceMock).getContactsOrderedByAge(Order.DESC, 4);
         verifyNoMoreInteractions(addressBookServiceMock);
     }
 
