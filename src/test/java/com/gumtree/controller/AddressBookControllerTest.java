@@ -5,6 +5,7 @@ import com.gumtree.domain.Gender;
 import com.gumtree.domain.Order;
 import com.gumtree.dto.ContactDTO;
 import com.gumtree.dto.ContactsDTO;
+import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.service.AddressBookService;
 import com.gumtree.springconfig.TestConfig;
 import com.gumtree.springconfig.WebAppConfig;
@@ -63,6 +64,9 @@ public class AddressBookControllerTest {
     @Autowired
     private AddressBookService addressBookServiceMock;
 
+    @Autowired
+    private AddressBookRepository addressBookRepositoryMock;
+
     private Contact john;
     private Contact jane;
     private Contact jack;
@@ -74,6 +78,7 @@ public class AddressBookControllerTest {
     @Before
     public void setup() throws ParseException {
         reset(addressBookServiceMock);
+        reset(addressBookRepositoryMock);
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -100,7 +105,7 @@ public class AddressBookControllerTest {
     }
 
     @Test
-    public void countContactsByGender_whenContactsOfGivenGenderDoNotExist_shouldReturnZero() throws Exception {
+    public void getCount_whenContactsOfGivenGenderDoNotExist_shouldReturnZero() throws Exception {
 
         when(addressBookServiceMock.getContactsByGender(Gender.MALE)).thenReturn(Collections.EMPTY_LIST);
 
@@ -115,7 +120,7 @@ public class AddressBookControllerTest {
     }
 
     @Test
-    public void countContactsByGender_whenContactsOfGivenGenderExist_shouldReturnCountOfGivenContacts() throws Exception {
+    public void getCount_whenContactsOfGivenGenderExist_shouldReturnCountOfContactsOfGivenGender() throws Exception {
 
         when(addressBookServiceMock.getContactsByGender(Gender.MALE)).thenReturn(maleContacts);
         when(addressBookServiceMock.getContactsByGender(Gender.FEMALE)).thenReturn(femaleContacts);
@@ -138,9 +143,26 @@ public class AddressBookControllerTest {
         verifyNoMoreInteractions(addressBookServiceMock);
     }
 
+    @Test
+    public void getCount_withNoRequestParameters_shouldReturnCountOfAllContacts() throws Exception {
+
+        when(addressBookRepositoryMock.getAllContacts()).thenReturn(allContacts);
+
+
+        mockMvc.perform(get("/api/contact/count"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.count", is(4)))
+        ;
+
+        verify(addressBookRepositoryMock).getAllContacts();
+        verifyNoMoreInteractions(addressBookRepositoryMock);
+        verifyNoMoreInteractions(addressBookServiceMock);
+    }
+
 
     @Test
-    public void countContactsByGender_incorrectGenderValue_ShouldReturnHttpStatusCode406() throws Exception {
+    public void getCount_incorrectGenderValue_ShouldReturnHttpStatusCode406() throws Exception {
 
         mockMvc.perform(get("/api/contact/count?gender={gender}", "sxxzc"))
                 .andExpect(status().isNotAcceptable());

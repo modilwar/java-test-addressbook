@@ -5,6 +5,7 @@ import com.gumtree.domain.Gender;
 import com.gumtree.domain.Order;
 import com.gumtree.dto.ContactsDTO;
 import com.gumtree.dto.CountDTO;
+import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.service.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,11 +24,20 @@ public class AddressBookController {
     @Autowired
     private AddressBookService addressBookService;
 
+    @Autowired
+    private AddressBookRepository  addressBookRepository;
+
     @RequestMapping(value = "/api/contact/count", method = RequestMethod.GET)
     @ResponseBody
-    public CountDTO countContactsByGender(@RequestParam("gender") String gender) throws ParseException {
-        Gender gen = Gender.valueOf(gender.toUpperCase());
-        List<Contact> contactsBy = addressBookService.getContactsByGender(gen);
+    public CountDTO count(@RequestParam(value = "gender", required = false) String gender) throws ParseException {
+        List<Contact> contactsBy = null;
+        if(gender != null) {
+            Gender gen = Gender.valueOf(gender.toUpperCase());
+            contactsBy = addressBookService.getContactsByGender(gen);
+        }
+        else {
+            contactsBy = addressBookRepository.getAllContacts();
+        }
         return new CountDTO(contactsBy.size());
     }
 
