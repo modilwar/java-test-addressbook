@@ -100,7 +100,7 @@ public class ContactsControllerTest {
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(johnDTO))
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.name", is(JOHN)))
                 .andExpect(jsonPath("$.gender", is(notNullValue())))

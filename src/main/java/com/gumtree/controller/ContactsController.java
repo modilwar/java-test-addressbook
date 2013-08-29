@@ -7,6 +7,7 @@ import com.gumtree.exception.ContactNotFoundException;
 import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.util.ContactUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class ContactsController {
 
     @RequestMapping(value = "/api/contact", method = RequestMethod.POST, consumes="application/json", produces="application/json")
     @ResponseBody
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ContactDTO add(@Valid @RequestBody ContactDTO contactDTO) throws ParseException {
         ContactUtils contactUtils = new ContactUtils();
         Contact contact = contactUtils.createContact(contactDTO);
