@@ -25,7 +25,7 @@ public class ContactsController {
     @Autowired
     private AddressBookRepository addressBookRepository;
 
-    @RequestMapping(value = "/api/contact", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/contact", method = RequestMethod.POST, consumes="application/json", produces="application/json")
     @ResponseBody
     public ContactDTO add(@Valid @RequestBody ContactDTO contactDTO) throws ParseException {
         Contact contact = createContact(contactDTO);
