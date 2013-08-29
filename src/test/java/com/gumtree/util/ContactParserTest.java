@@ -83,6 +83,7 @@ public class ContactParserTest {
         assertNotNull(contact2);
         assertEquals(JANE, contact2.getName());
         assertTrue(contact2.isFemale());
+        assertEquals(dob081285, contact2.getDob());
     }
 
     @Test
@@ -92,6 +93,7 @@ public class ContactParserTest {
         assertNotNull(contact1);
         assertEquals(JOHN, contact1.getName());
         assertTrue(contact1.isMale());
+        assertEquals(dob150682, contact1.getDob());
 
 
         String input2 = "Jane, Female, 08/12/85";
@@ -99,6 +101,7 @@ public class ContactParserTest {
         assertNotNull(contact2);
         assertEquals(JANE, contact2.getName());
         assertTrue(contact2.isFemale());
+        assertEquals(dob081285, contact2.getDob());
     }
 
     @Test(expected = BadlyFormattedContactException.class)
