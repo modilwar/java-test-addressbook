@@ -20,3 +20,64 @@ Some insights on what we'll be looking for (and what we will be not):
 - We will be looking at how you apporoach the task (e.g. how you break it into sub-tasks) and how you structure your code to answer the questions.
 
 Good Luck!
+
+
+#######INSTRUCTIONS TO DEPLOY AND USE REST SERVICE##############
+
+To deploy the REST service type 'mvn jetty:run' in command promt from root of the project
+
+REST API
+
+1 . POST to http://localhost:8080/api/contact to add contacts to address book
+    Requires JSON request body in following format:
+    {
+        "name" : "name",
+        "gender" : "Male or Female",
+        "dob" : "dd/MM/yy"
+    }
+
+2.  GET on http://localhost:8080/api/contact to get list of contacts from Address Book
+    With optional parameters:
+    order_by=age
+    order_how=[desc | asc]
+    limit=[1..infinity]
+
+
+2.  GET on http://localhost:8080/api/contact/count to get count of contacts in Address Book
+    With optional parameter:
+    gender=[male | female]
+
+
+
+To add all the contacts found in the AddressBook file:
+
+Send POST requests to http://localhost:8080/api/contact with the following request bodies
+{"name" : "Bill McKnight", "gender" : "Male", "dob" : "16/03/77"}
+{"name" : "Paul Robinson", "gender" : "Male", "dob" : "15/01/85"}
+{"name" : "Gemma Lane", "gender" : "Female", "dob" : "20/11/91"}
+{"name" : "Sarah Stone", "gender" : "Female", "dob" : "20/09/80"}
+{"name" : "Wes Jackson", "gender" : "Male", "dob" : "14/08/74"}
+
+
+To answer question 1:
+
+Send a GET request to http://localhost:8080/api/contact/count?gender=male
+The response should be the following JSON:
+{
+    "count" : 3
+}
+
+3. To answer question 2
+
+Send a GET request to using http://localhost:8080/api/contact?order_by=age&order_how=desc&limit=1
+The response should be the following JSON:
+{
+    "contacts" : [
+        {
+            "name":"Wes Jackson",
+            "gender":"Male",
+            "dob":"14/08/74"
+        }
+    ],
+    "count":1
+}
