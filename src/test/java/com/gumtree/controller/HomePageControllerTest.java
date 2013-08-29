@@ -1,5 +1,6 @@
 package com.gumtree.controller;
 
+import com.gumtree.springconfig.TestConfig;
 import com.gumtree.springconfig.WebAppConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebAppConfig.class)
+@ContextConfiguration(classes = {WebAppConfig.class, TestConfig.class})
 @WebAppConfiguration
 public class HomePageControllerTest {
 

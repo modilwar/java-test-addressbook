@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextHierarchy(@ContextConfiguration(classes = WebAppConfig.class))
+@ContextHierarchy(@ContextConfiguration(classes = {WebAppConfig.class, TestConfig.class}))
 public class WebAppConfigTest {
 
     @Autowired

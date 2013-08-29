@@ -12,11 +12,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class AddressBookServiceImplTest {
 
@@ -97,6 +94,40 @@ public class AddressBookServiceImplTest {
 
         assertEquals(1, service.getNumberOfMaleContacts());
         verify(repository).getAllContacts();
+    }
+      ////
+
+    @Test
+    public void getContactsByGender_returnsEmptyList_whenAddressBookIsEmpty() {
+        List<Contact> contacts = Collections.emptyList();
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        assertTrue(service.getContactsByGender(Gender.MALE).isEmpty());
+        assertTrue(service.getContactsByGender(Gender.FEMALE).isEmpty());
+        verify(repository, times(2)).getAllContacts();
+    }
+
+    @Test
+    public void getContactsByGender_returnsOne_whenAddressBookContainOnlyOneContactOfAnyGivenGender() {
+        List<Contact> contacts = new LinkedList<Contact>(){{add(johnMale150682);add(janeFemale081285);}};
+
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        assertEquals(1, service.getContactsByGender(Gender.MALE).size());
+        assertEquals(1, service.getContactsByGender(Gender.FEMALE).size());
+        verify(repository, times(2)).getAllContacts();
+    }
+
+    @Test
+    public void getContactsByGender_retrunsAllContactsOfAGivenGender_whenAddressBookContainManyFemaleAndManyMaleContact() {
+        List<Contact> contacts = new LinkedList<Contact>(){
+            {add(janeFemale081285);add(jackMale160682);add(johnMale150682);add(joeFemale081285);}};
+
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        assertEquals(2, service.getContactsByGender(Gender.MALE).size());
+        assertEquals(2, service.getContactsByGender(Gender.FEMALE).size());
+        verify(repository, times(2)).getAllContacts();
     }
 
     @Test

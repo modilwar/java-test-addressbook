@@ -2,10 +2,12 @@ package com.gumtree.service;
 
 import com.gumtree.domain.Contact;
 import com.gumtree.domain.ContactDescendingAgeComparator;
+import com.gumtree.domain.Gender;
 import com.gumtree.repository.AddressBookRepository;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -28,6 +30,16 @@ public class AddressBookServiceImpl implements AddressBookService {
             if (contact.isMale()) noOfMales++;
         }
         return noOfMales;
+    }
+
+    @Override
+    public List<Contact> getContactsByGender(Gender gen) {
+        List<Contact> contactsOfGender = new LinkedList<>();
+        List<Contact> allContacts = repository.getAllContacts();
+        for (Contact contact : allContacts) {
+            if (contact.getGender() == gen) contactsOfGender.add(contact);
+        }
+        return contactsOfGender;
     }
 
     @Override
