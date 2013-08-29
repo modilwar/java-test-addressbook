@@ -3,6 +3,7 @@ package com.gumtree.controller;
 import com.gumtree.domain.Contact;
 import com.gumtree.domain.Gender;
 import com.gumtree.dto.ContactDTO;
+import com.gumtree.exception.ContactNotFoundException;
 import com.gumtree.repository.AddressBookRepository;
 import com.gumtree.springconfig.TestConfig;
 import com.gumtree.springconfig.WebAppConfig;
@@ -70,6 +71,17 @@ public class ContactsControllerTest {
                 .andExpect(jsonPath("$.gender", is(notNullValue())))
                 .andExpect(jsonPath("$.dob", is(DOB_150682)))
         ;
+
+        verify(addressBookRepositoryMock).get(JOHN);
+        verifyNoMoreInteractions(addressBookRepositoryMock);
+    }
+
+    @Test
+    public void testFindByName_ContactEntryNotFound_ShouldReturnHttpStatusCode404() throws Exception {
+        when(addressBookRepositoryMock.get(JOHN)).thenThrow(new ContactNotFoundException());
+
+        mockMvc.perform(get("/api/contact/{name}", JOHN))
+                .andExpect(status().isNotFound());
 
         verify(addressBookRepositoryMock).get(JOHN);
         verifyNoMoreInteractions(addressBookRepositoryMock);

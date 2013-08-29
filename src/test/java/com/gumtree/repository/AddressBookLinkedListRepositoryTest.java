@@ -2,6 +2,7 @@ package com.gumtree.repository;
 
 import com.gumtree.domain.Contact;
 import com.gumtree.domain.Gender;
+import com.gumtree.exception.ContactNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,16 +71,16 @@ public class AddressBookLinkedListRepositoryTest {
         assertEquals(2, allContacts.size());
     }
 
-    @Test
-    public void get_returnNull_whenAddressBookContainsNoContacts() {
-        assertNull(repository.get(JANE));
+    @Test(expected = ContactNotFoundException.class)
+    public void get_throwContactNotFoundException_whenAddressBookContainsNoContacts() {
+        repository.get(JANE);
     }
 
-    @Test
-    public void get_returnNull_whenAddressContactWithGivenNameNotFoundInAddress() {
+    @Test(expected = ContactNotFoundException.class)
+    public void get_throwContactNotFoundException_whenAddressContactWithGivenNameNotFoundInAddress() {
         repository.add(johnMale150682);
         repository.add(janeFemale081285);
-        assertNull(repository.get("BOB"));
+        repository.get("BOB");
     }
 
     @Test

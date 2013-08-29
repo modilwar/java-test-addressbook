@@ -1,6 +1,7 @@
 package com.gumtree.repository;
 
 import com.gumtree.domain.Contact;
+import com.gumtree.exception.ContactNotFoundException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,6 @@ public class AddressBookLinkedListRepository implements AddressBookRepository {
         for (Contact contact : contacts) {
             if (name.endsWith(contact.getName())) return contact;
         }
-        return null;
+        throw new ContactNotFoundException();
     }
 }
