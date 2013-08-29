@@ -58,7 +58,7 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void testfindByName_ConactEntryFound_ShouldReturnFoundContactEntry() throws Exception {
+    public void testFindByName_ContactEntryFound_ShouldReturnFoundContactEntry() throws Exception {
         ContactDTO johnDTO = new ContactDTO(JOHN, MALE, DOB_150682);
         Contact john = createContact(johnDTO);
 
