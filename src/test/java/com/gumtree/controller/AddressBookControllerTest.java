@@ -60,7 +60,7 @@ public class AddressBookControllerTest {
     private Contact jack;
     private Contact joe;
     private LinkedList<Contact> maleContacts;
-    private LinkedList<Contact> femalContacts;
+    private LinkedList<Contact> femaleContacts;
 
 
     @Before
@@ -78,14 +78,14 @@ public class AddressBookControllerTest {
             add(jack);
             add(john);
         }};
-        femalContacts = new LinkedList<Contact>() {{
+        femaleContacts = new LinkedList<Contact>() {{
             add(jane);
             add(joe);
         }};
     }
 
     @Test
-    public void countContactsByGender_whenContactsOfGivenGenderDontExist_ShouldReturnZero() throws Exception {
+    public void countContactsByGender_whenContactsOfGivenGenderDoNotExist_ShouldReturnZero() throws Exception {
 
         when(addressBookServiceMock.getContactsByGender(Gender.MALE)).thenReturn(Collections.EMPTY_LIST);
 
@@ -103,7 +103,7 @@ public class AddressBookControllerTest {
     public void countContactsByGender_whenContactsOfGivenGenderExist_ShouldReturnCountOfGivenContacts() throws Exception {
 
         when(addressBookServiceMock.getContactsByGender(Gender.MALE)).thenReturn(maleContacts);
-        when(addressBookServiceMock.getContactsByGender(Gender.FEMALE)).thenReturn(femalContacts);
+        when(addressBookServiceMock.getContactsByGender(Gender.FEMALE)).thenReturn(femaleContacts);
 
         mockMvc.perform(get("/api/contact/count?gender={gender}", "Male"))
                 .andExpect(status().isOk())

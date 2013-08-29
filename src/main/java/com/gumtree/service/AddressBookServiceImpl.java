@@ -3,6 +3,7 @@ package com.gumtree.service;
 import com.gumtree.domain.Contact;
 import com.gumtree.domain.ContactDescendingAgeComparator;
 import com.gumtree.domain.Gender;
+import com.gumtree.domain.Order;
 import com.gumtree.repository.AddressBookRepository;
 
 import java.util.Collections;
@@ -40,6 +41,11 @@ public class AddressBookServiceImpl implements AddressBookService {
             if (contact.getGender() == gen) contactsOfGender.add(contact);
         }
         return contactsOfGender;
+    }
+
+    @Override
+    public List<Contact> getContacts(String orderBy, Order order, int limit) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
