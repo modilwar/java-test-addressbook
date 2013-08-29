@@ -57,8 +57,26 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void testAddNewContact() throws Exception {
+    public void testfindByName_ConactEntryFound_ShouldReturnFoundContactEntry() throws Exception {
+        ContactDTO johnDTO = new ContactDTO(JOHN, MALE, DOB_150682);
+        Contact john = createContact(johnDTO);
 
+        when(addressBookRepositoryMock.get(JOHN)).thenReturn(john);
+
+        mockMvc.perform(get("/api/contact/{name}", JOHN))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.name", is(JOHN)))
+                .andExpect(jsonPath("$.gender", is(notNullValue())))
+                .andExpect(jsonPath("$.dob", is(DOB_150682)))
+        ;
+
+        verify(addressBookRepositoryMock).get(JOHN);
+        verifyNoMoreInteractions(addressBookRepositoryMock);
+    }
+
+    @Test
+    public void testAddNewContact() throws Exception {
 
         ContactDTO johnDTO = new ContactDTO(JOHN, MALE, DOB_150682);
         Contact john = createContact(johnDTO);
@@ -78,7 +96,7 @@ public class ContactsControllerTest {
         ;
 
         ArgumentCaptor<Contact> captor = ArgumentCaptor.forClass(Contact.class);
-        verify(addressBookRepositoryMock, times(1)).add(captor.capture());
+        verify(addressBookRepositoryMock).add(captor.capture());
         verifyNoMoreInteractions(addressBookRepositoryMock);
 
         Contact argument = captor.getValue();

@@ -6,10 +6,7 @@ import com.gumtree.dto.ContactDTO;
 import com.gumtree.repository.AddressBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -24,6 +21,13 @@ public class ContactsController {
 
     @Autowired
     private AddressBookRepository addressBookRepository;
+
+    @RequestMapping(value = "/api/contact/{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public ContactDTO findById(@PathVariable("name") String  name) {
+        Contact found = addressBookRepository.get(name);
+        return createContactDTO(found);
+    }
 
     @RequestMapping(value = "/api/contact", method = RequestMethod.POST, consumes="application/json", produces="application/json")
     @ResponseBody
