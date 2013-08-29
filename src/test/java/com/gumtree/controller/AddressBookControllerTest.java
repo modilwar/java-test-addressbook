@@ -223,7 +223,7 @@ public class AddressBookControllerTest {
 
         when(addressBookServiceMock.getContactsOrderedByDob(Order.DESC, 4)).thenReturn(orderedContactsDTO);
 
-        mockMvc.perform(get("/api/contact?order_by={order_by}&order_how={order_how}&limit={limit}", "dob", "desc", "4"))
+        mockMvc.perform(get("/api/contact?order_by={order_by}&order_how={order_how}&limit={limit}", "age", "desc", "4"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.count.", is(contactDTOs.size())))

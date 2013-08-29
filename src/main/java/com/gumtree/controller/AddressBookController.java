@@ -33,7 +33,7 @@ public class AddressBookController {
 
     @RequestMapping(value = "/api/contact", method = RequestMethod.GET)
     @ResponseBody
-    public ContactsDTO getContacts(@RequestParam(value = "order_by", defaultValue = "dob", required = false) String orderBy,
+    public ContactsDTO getContacts(@RequestParam(value = "order_by", defaultValue = "age", required = false) String orderBy,
                                    @RequestParam(value = "order_how", defaultValue = "asc", required = false) String orderHow,
                                    @RequestParam(value = "limit", defaultValue = "10", required = false) int limit) throws ParseException {
 
@@ -47,7 +47,7 @@ public class AddressBookController {
     }
 
     private void throwIllegalArgumentExceptionForIlllegalOrderByParameters(String orderBy) {
-        if (orderBy != null && !"dob".equalsIgnoreCase(orderBy.trim())) {
+        if (orderBy != null && !"age".equalsIgnoreCase(orderBy.trim())) {
             throw new IllegalArgumentException();
         }
     }
