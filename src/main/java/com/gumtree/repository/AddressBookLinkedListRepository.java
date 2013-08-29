@@ -19,8 +19,9 @@ public class AddressBookLinkedListRepository implements AddressBookRepository {
     }
 
     @Override
-    public void add(Contact contact) {
+    public Contact add(Contact contact) {
         contacts.add(contact);
+        return contact;
     }
 
     @Override

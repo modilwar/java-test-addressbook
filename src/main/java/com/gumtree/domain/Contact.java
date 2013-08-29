@@ -53,4 +53,8 @@ public class Contact {
     public String getName() {
         return name;
     }
+
+    public Gender getGender() {
+        return gender;
+    }
 }

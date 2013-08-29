@@ -37,6 +37,13 @@ public class AddressBookLinkedListRepositoryTest {
     }
 
     @Test
+    public void add_addsNewContactTOAddressBookAndReturnsTheAddedContact() {
+        Contact added = repository.add(johnMale150682);
+        assertEquals(1, repository.getAllContacts().size());
+        assertEquals(johnMale150682, added);
+    }
+
+    @Test
     public void getAllContactsTest_returnEmptyList_whenAddressBookContainsNoContacts() {
         List<Contact> allContacts = repository.getAllContacts();
 
