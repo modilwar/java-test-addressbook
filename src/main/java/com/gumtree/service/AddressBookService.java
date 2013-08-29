@@ -3,6 +3,7 @@ package com.gumtree.service;
 import com.gumtree.domain.Contact;
 import com.gumtree.domain.Gender;
 import com.gumtree.domain.Order;
+import com.gumtree.dto.ContactsDTO;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface AddressBookService {
 
     List<Contact> getContactsByGender(Gender gen);
 
-    List<Contact> getContacts(String orderBy, Order order, int limit);
+    ContactsDTO getContactsOrderedByDob(Order order, int limit);
 }

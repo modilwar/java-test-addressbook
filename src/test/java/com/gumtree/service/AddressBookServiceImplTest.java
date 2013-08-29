@@ -95,40 +95,6 @@ public class AddressBookServiceImplTest {
         assertEquals(1, service.getNumberOfMaleContacts());
         verify(repository).getAllContacts();
     }
-      ////
-
-    @Test
-    public void getContactsByGender_returnsEmptyList_whenAddressBookIsEmpty() {
-        List<Contact> contacts = Collections.emptyList();
-        when(repository.getAllContacts()).thenReturn(contacts) ;
-
-        assertTrue(service.getContactsByGender(Gender.MALE).isEmpty());
-        assertTrue(service.getContactsByGender(Gender.FEMALE).isEmpty());
-        verify(repository, times(2)).getAllContacts();
-    }
-
-    @Test
-    public void getContactsByGender_returnsOne_whenAddressBookContainOnlyOneContactOfAnyGivenGender() {
-        List<Contact> contacts = new LinkedList<Contact>(){{add(johnMale150682);add(janeFemale081285);}};
-
-        when(repository.getAllContacts()).thenReturn(contacts) ;
-
-        assertEquals(1, service.getContactsByGender(Gender.MALE).size());
-        assertEquals(1, service.getContactsByGender(Gender.FEMALE).size());
-        verify(repository, times(2)).getAllContacts();
-    }
-
-    @Test
-    public void getContactsByGender_retrunsAllContactsOfAGivenGender_whenAddressBookContainManyFemaleAndManyMaleContact() {
-        List<Contact> contacts = new LinkedList<Contact>(){
-            {add(janeFemale081285);add(jackMale160682);add(johnMale150682);add(joeFemale081285);}};
-
-        when(repository.getAllContacts()).thenReturn(contacts) ;
-
-        assertEquals(2, service.getContactsByGender(Gender.MALE).size());
-        assertEquals(2, service.getContactsByGender(Gender.FEMALE).size());
-        verify(repository, times(2)).getAllContacts();
-    }
 
     @Test
     public void getOldestPerson_returnsNullFromEmptyAddressBook() {
@@ -198,4 +164,38 @@ public class AddressBookServiceImplTest {
         Long days = service.ageDifferenceBetween(jackMale160682, johnMale150682);
         assertEquals(new Long(-1), days);
     }
+
+    @Test
+    public void getContactsByGender_returnsEmptyList_whenAddressBookIsEmpty() {
+        List<Contact> contacts = Collections.emptyList();
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        assertTrue(service.getContactsByGender(Gender.MALE).isEmpty());
+        assertTrue(service.getContactsByGender(Gender.FEMALE).isEmpty());
+        verify(repository, times(2)).getAllContacts();
+    }
+
+    @Test
+    public void getContactsByGender_returnsOne_whenAddressBookContainOnlyOneContactOfAnyGivenGender() {
+        List<Contact> contacts = new LinkedList<Contact>(){{add(johnMale150682);add(janeFemale081285);}};
+
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        assertEquals(1, service.getContactsByGender(Gender.MALE).size());
+        assertEquals(1, service.getContactsByGender(Gender.FEMALE).size());
+        verify(repository, times(2)).getAllContacts();
+    }
+
+    @Test
+    public void getContactsByGender_returnsAllContactsOfAGivenGender_whenAddressBookContainManyFemaleAndManyMaleContact() {
+        List<Contact> contacts = new LinkedList<Contact>(){
+            {add(janeFemale081285);add(jackMale160682);add(johnMale150682);add(joeFemale081285);}};
+
+        when(repository.getAllContacts()).thenReturn(contacts) ;
+
+        assertEquals(2, service.getContactsByGender(Gender.MALE).size());
+        assertEquals(2, service.getContactsByGender(Gender.FEMALE).size());
+        verify(repository, times(2)).getAllContacts();
+    }
+
 }

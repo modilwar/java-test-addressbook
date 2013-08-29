@@ -33,20 +33,27 @@ public class AddressBookController {
 
     @RequestMapping(value = "/api/contact", method = RequestMethod.GET)
     @ResponseBody
-    public ContactsDTO countContactsByGender(@RequestParam(value = "order_by", required = false) String orderBy,
-                                             @RequestParam(value = "order_how", defaultValue = "asc", required = false) String orderHow,
-                                             @RequestParam(value = "limit", defaultValue = "0", required = false) int limit) throws ParseException {
+    public ContactsDTO getContacts(@RequestParam(value = "order_by", defaultValue = "dob", required = false) String orderBy,
+                                   @RequestParam(value = "order_how", defaultValue = "asc", required = false) String orderHow,
+                                   @RequestParam(value = "limit", defaultValue = "10", required = false) int limit) throws ParseException {
 
         throwIllegalArgumentExceptionForIlllegalOrderByParameters(orderBy);
 
         Order order = Order.valueOf(orderHow.toUpperCase());
 
-        List<Contact> contactsBy = addressBookService.getContacts(orderBy, order, limit);
-        return null;
+        throwIllegalArgumentExceptionForLimitLessThanOne(limit);
+
+        return addressBookService.getContactsOrderedByDob(order, limit);
     }
 
     private void throwIllegalArgumentExceptionForIlllegalOrderByParameters(String orderBy) {
         if (orderBy != null && !"dob".equalsIgnoreCase(orderBy.trim())) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void throwIllegalArgumentExceptionForLimitLessThanOne(int limit) {
+        if (limit < 1) {
             throw new IllegalArgumentException();
         }
     }

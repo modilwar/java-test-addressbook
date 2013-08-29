@@ -4,6 +4,7 @@ import com.gumtree.domain.Contact;
 import com.gumtree.domain.ContactDescendingAgeComparator;
 import com.gumtree.domain.Gender;
 import com.gumtree.domain.Order;
+import com.gumtree.dto.ContactsDTO;
 import com.gumtree.repository.AddressBookRepository;
 
 import java.util.Collections;
@@ -34,6 +35,17 @@ public class AddressBookServiceImpl implements AddressBookService {
     }
 
     @Override
+    public Contact getOldestPerson() {
+        List<Contact> allContacts = repository.getAllContacts();
+
+        if (!allContacts.isEmpty()) {
+            Collections.sort(allContacts, conparator);
+            return allContacts.get(0);
+        }
+        return null;
+    }
+
+    @Override
     public List<Contact> getContactsByGender(Gender gen) {
         List<Contact> contactsOfGender = new LinkedList<>();
         List<Contact> allContacts = repository.getAllContacts();
@@ -44,19 +56,8 @@ public class AddressBookServiceImpl implements AddressBookService {
     }
 
     @Override
-    public List<Contact> getContacts(String orderBy, Order order, int limit) {
+    public ContactsDTO getContactsOrderedByDob(Order order, int limit) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public Contact getOldestPerson() {
-        List<Contact> allContacts = repository.getAllContacts();
-
-        if (!allContacts.isEmpty()) {
-            Collections.sort(allContacts, conparator);
-            return allContacts.get(0);
-        }
-        return null;
     }
 
     @Override
